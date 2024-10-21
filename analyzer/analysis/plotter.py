@@ -40,12 +40,12 @@ class Figure():
         plt.gca().spines['top'].set_visible(False)
         plt.gca().spines['bottom'].set_visible(False)
 
-    def _set_scale_bars(self, ax, scale:float, STIM_TIMING:float):
+    def _set_scale_bars(self, ax, vscale:float, STIM_TIMING:float):
         """Set the scale bars"""
-        self.scale = scale * 2
-        self.VSCALE = scale  # in uV
+        self.scale = vscale * 2
+        self.VSCALE = vscale  # in uV
         self.HSCALE = 20  # in ms
-        self.HSCALE_START = STIM_TIMING + 25  # in ms
+        self.HSCALE_START = STIM_TIMING*1.5  # in ms
         self.ax = ax
 
         kwargs_scale = {
@@ -58,13 +58,13 @@ class Figure():
         # Horizontal scale bar
         self.ax.plot([self.HSCALE_START, self.HSCALE_START+self.HSCALE], [-self.scale*0.9, -self.scale*0.9], **kwargs_scale)
 
-    def plot_lfps(self, t:float, lfps:float, STIM_TIMING:float, scale:float, CHS:int, stim_ch:int):
+    def plot_lfps(self, t:float, averaged_lfps:float, STIM_TIMING:float, vscale:float, CHS:int, stim_ch:int):
         """Plot the waves for all channels"""
-        self.lfps = lfps
+        self.averaged_lfps = averaged_lfps
         self.t = t  # in ms
         self.CHS = CHS
-        self.scale = scale * 2  # in uV
-        self.STIM_TIMING = STIM_TIMING * 1e3  # in ms
+        self.scale = vscale * 2  # in uV
+        self.STIM_TIMING = STIM_TIMING  # in ms
         self.stim_ch = stim_ch
 
         kwargs_signal, kwargs_stimuli, kwargs_baseline = self._set_plot_theme()
@@ -79,7 +79,7 @@ class Figure():
 
             if ch != self.stim_ch-1:
                 ax.plot([START, END], [0, 0], **kwargs_baseline)
-                ax.plot(self.t, self.lfps[ch]*1e3, **kwargs_signal)
+                ax.plot(self.t, self.averaged_lfps[ch]*1e3, **kwargs_signal)
                 ax.plot(self.STIM_TIMING, self.scale/2 * 0.8, **kwargs_stimuli)
 
                 ax.set_xlim([START, END])
@@ -87,6 +87,6 @@ class Figure():
 
             self._delete_axes()
             
-        self._set_scale_bars(ax, self.scale, self.STIM_TIMING)
+        self._set_scale_bars(ax, vscale, self.STIM_TIMING)
 
         return fig

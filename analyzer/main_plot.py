@@ -19,10 +19,10 @@ class Analyzer():
         
         # Set the basic parameters
         FS, CHS, DURATION = st.Settings().set_basic_params()
-        TRIALS:int = self.parameters["trials"]
-        STIM_TIMING:float = self.parameters["stim_timing"]
-        scale:float = self.parameters["scale"]
-        stim_ch:int = self.parameters["stim_ch"]
+        TRIALS:int = int(self.parameters["trials"])
+        STIM_TIMING:float = float(self.parameters["stim_onset"])
+        vscale:float = float(self.parameters["vscale"])
+        stim_ch:int = int(self.parameters["stim_ch"])
 
         N:int = int(FS * DURATION)
 
@@ -30,6 +30,6 @@ class Analyzer():
         averaged_lfps = wf.Waveform().averaged_wave(lfps, CHS, TRIALS, N)
 
         # Plot the LFPs
-        fig = pl.Figure().plot_lfps(t, averaged_lfps, STIM_TIMING, scale, CHS, stim_ch)
+        fig = pl.Figure().plot_lfps(t, averaged_lfps, STIM_TIMING, vscale, CHS, stim_ch)
 
         return fig
