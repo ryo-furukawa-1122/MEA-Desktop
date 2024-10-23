@@ -4,6 +4,7 @@ import os
 from pathlib import Path
 import re
 import controls.parameter_container as pc
+import controls.manual as mn
 import analyzer.main_plot as mp
 import matplotlib
 
@@ -14,9 +15,12 @@ def main(page: ft.Page):
     page.padding = 50
     page.scroll = True
     page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
-    page.appbar = ft.CupertinoAppBar(
-        middle = ft.Text("Multielectrode Array"),
-        bgcolor=ft.colors.SURFACE_VARIANT,
+    page.appbar = ft.AppBar(
+        title = ft.Text("Multielectrode Array"),
+        center_title = True,
+        bgcolor = ft.colors.with_opacity(ft.colors.SURFACE_VARIANT, 0.9),
+        elevation_on_scroll = 4,
+        shadow_color = ft.colors.SHADOW
     )
 
     status_text = ft.Text()
@@ -70,11 +74,20 @@ def main(page: ft.Page):
     file_picker = ft.FilePicker(on_result=on_file_selected)
     page.overlay.append(file_picker)
 
-    button_upload = ft.OutlinedButton("Plot LFP", on_click=lambda _: file_picker.pick_files(allowed_extensions=["csv"]), width=150, height=50, icon=ft.icons.FILE_UPLOAD_ROUNDED)
+    button_upload = ft.OutlinedButton("Plot LFP", on_click=lambda _: file_picker.pick_files(allowed_extensions=["csv"]), width=150, height=50, icon=ft.icons.FILE_UPLOAD_ROUNDED, icon_color=ft.colors.BLUE, style=ft.ButtonStyle(color=ft.colors.BLUE))
+
+    manual = ft.ExpansionTile(
+        title = ft.Text("Manual"),
+        affinity = ft.TileAffinity.PLATFORM,
+        controls=[mn.Manual()],
+        collapsed_text_color = ft.colors.BLUE,
+        text_color = ft.colors.BLUE_200,
+    )
 
     contents = [
         parameter_container,
         ft.Row([button_upload], alignment=ft.MainAxisAlignment.CENTER),
+        manual,
         plot_container
     ]
 
