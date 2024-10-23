@@ -14,24 +14,33 @@ def main(page: ft.Page):
     page.padding = 50
     page.scroll = True
     page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
-    page.appbar = ft.AppBar(
-        title = ft.Text("Multielectrode Array"),
-        center_title = True,
-        bgcolor = ft.colors.with_opacity(0.05, ft.cupertino_colors.SYSTEM_BACKGROUND)
+    page.appbar = ft.CupertinoAppBar(
+        middle = ft.Text("Multielectrode Array"),
+        bgcolor=ft.colors.SURFACE_VARIANT,
     )
 
     status_text = ft.Text()
     plot_container = ft.Container(visible=False)
     parameter_container = pc.ParameterContainer()
 
+    page.snack_bar = ft.SnackBar(
+        content = status_text
+    )
+
+    def show_status(status_text: ft.Text):
+        page.snack_bar.content = status_text
+        page.snack_bar.open = True
+        page.update()
+
     def on_file_selected(e: ft.FilePickerResultEvent):
         if e.files:
             file_path = e.files[0].path
             try:
                 status_text.value = "Generating graph..."
+                show_status(status_text)
                 page.update()
 
-                parameters = pc.ParameterContainer().get_parameters()
+                parameters = parameter_container.get_parameters()
 
                 fig, plot_path = call_analyzer(file_path, parameters)
                 
@@ -61,14 +70,11 @@ def main(page: ft.Page):
     file_picker = ft.FilePicker(on_result=on_file_selected)
     page.overlay.append(file_picker)
 
+    button_upload = ft.OutlinedButton("Plot LFP", on_click=lambda _: file_picker.pick_files(allowed_extensions=["csv"]), width=150, height=50, icon=ft.icons.FILE_UPLOAD_ROUNDED)
+
     contents = [
         parameter_container,
-        ft.Row([
-            ft.ElevatedButton("Set"),
-            ft.ElevatedButton("File Upload", on_click=lambda _: file_picker.pick_files(allowed_extensions=["csv"])),
-        ], alignment=ft.MainAxisAlignment.SPACE_AROUND
-        ),
-        status_text,
+        ft.Row([button_upload], alignment=ft.MainAxisAlignment.CENTER),
         plot_container
     ]
 
