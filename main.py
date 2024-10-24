@@ -18,9 +18,13 @@ def main(page: ft.Page):
     page.appbar = ft.AppBar(
         title = ft.Text("Multielectrode Array"),
         center_title = True,
-        bgcolor = ft.colors.with_opacity(ft.colors.SURFACE_VARIANT, 0.9),
+        bgcolor = ft.colors.with_opacity(ft.colors.WHITE, 0.9),
         elevation_on_scroll = 4,
-        shadow_color = ft.colors.SHADOW
+        shadow_color = ft.colors.SHADOW,
+        actions = [
+            ft.IconButton(icon=ft.icons.SOURCE_OUTLINED, url="https://github.com/ryo-furukawa-1122/MEA-Desktop", icon_color=ft.colors.BLUE),
+            ft.Text("    ")
+        ]
     )
 
     status_text = ft.Text()
@@ -99,4 +103,7 @@ def main(page: ft.Page):
         )
     )
 
-ft.app(target=main)
+ft.app(
+    main,
+    assets_dir="assets"
+)
