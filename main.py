@@ -89,9 +89,9 @@ def main(page: ft.Page):
     )
 
     contents = [
+        manual,
         parameter_container,
         ft.Row([button_upload], alignment=ft.MainAxisAlignment.CENTER),
-        manual,
         plot_container
     ]
 
