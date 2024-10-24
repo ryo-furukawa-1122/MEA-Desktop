@@ -22,7 +22,7 @@ def main(page: ft.Page):
         elevation_on_scroll = 4,
         shadow_color = ft.colors.SHADOW,
         actions = [
-            ft.IconButton(icon=ft.icons.SOURCE_OUTLINED, url="https://github.com/ryo-furukawa-1122/MEA-Desktop", icon_color=ft.colors.BLUE),
+            ft.IconButton(icon=ft.icons.CODE_ROUNDED, url="https://github.com/ryo-furukawa-1122/MEA-Desktop", icon_color=ft.colors.BLUE),
             ft.Text("    ")
         ]
     )
