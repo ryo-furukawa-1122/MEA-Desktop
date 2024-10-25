@@ -11,13 +11,13 @@ You can plot the averaged local field potential (LFP) recorded with a 64-ch mult
 
 # Install
 ## Windows
-- Download the installer.zip.
-- In your computer's Downloads folder, double-click the installer.zip file.
+- Download the windows.zip in the installers folder.
+- In your computer's Downloads folder, double-click the windows.zip file.
 - After the file has been unzipped, double-click the MEA Desktop exe file in the windows folder. 
 - MEA Desktop will launch. 
 ## Mac
-- Download the installer.zip.
-- In your computer's Downloads folder, double-click the installer.zip file.
+- Download the macos.zip in the installers folder.
+- In your computer's Downloads folder, double-click the macos.zip file.
 - After the file has been unzipped, double-click the MEA Desktop application file in the macos folder. 
 - MEA Desktop will launch. 
 
