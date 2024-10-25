@@ -45,7 +45,7 @@ class Figure():
         self.scale = vscale * 2
         self.VSCALE = vscale  # in uV
         self.HSCALE = 20  # in ms
-        self.HSCALE_START = STIM_TIMING*1.5  # in ms
+        self.HSCALE_START = STIM_TIMING + 25  # in ms
         self.ax = ax
 
         kwargs_scale = {
